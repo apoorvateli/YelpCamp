@@ -1,8 +1,14 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
+app.get("/", function(req, res) {
+  res.render("landing");
+});
 
 app.get("/campgrounds", function(req, res) {
   var campgrounds = [
@@ -13,8 +19,11 @@ app.get("/campgrounds", function(req, res) {
   res.render("campgrounds", {campgrounds: campgrounds});
 });
 
-app.get("/", function(req, res) {
-  res.render("landing");
+// Create new campgrounds
+app.post("/campgrounds", function(req, res) {
+  // get data from form and add to campgrounds array
+  // redirect back to campgrounds page (campgrounds get route)
+  res.send("You hit the post route");
 });
 
 app.get("*", function(req, res) {
