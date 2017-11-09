@@ -1,0 +1,10 @@
+<h1>Campgrounds page</h1>
+
+<% campgrounds.forEach( function(value, index) { %>
+  <div>
+    <h4><%= value["name"] %></h4>
+    <img src="<%= value["image"] %>" alt="campground image">
+  </div>
+<% } ); %>
+
+<%= campgrounds %>
