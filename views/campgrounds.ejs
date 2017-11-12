@@ -14,12 +14,23 @@
     </div>
   </header>
 
-  <% campgrounds.forEach( function(value, index) { %>
-    <div>
-      <h4><%= value["name"] %></h4>
-      <img src="<%= value["image"] %>" alt="campground image">
-    </div>
-  <% } ); %>
+  <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+    <!-- We have images of different heights. So are grid is a bit messed up.
+    We add this style attribute to our row div to fix that.
+    Because to this style(flex), our grid becomes more flexible. It doesn't matter that we have images of different heights.
+    Because now the grid adapts. So if the height of the image is very short, or long, it still stays in its row.
+    i.e. the height of the row becomes flexible. -->
+    <% campgrounds.forEach( function(value, index) { %>
+      <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+          <img src="<%= value["image"] %>" alt="campground image">
+          <div class="caption">
+            <h4><%= value["name"] %></h4>
+          </div>
+        </div>
+      </div>
+    <% } ); %>
+  </div>
 
 </div>
 
