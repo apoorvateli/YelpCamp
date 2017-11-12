@@ -1,14 +1,26 @@
 <% include partials/header %>
 
-<h1>Campgrounds page</h1>
+<div class="container">
 
-<a href="/campgrounds/new">Add new campground</a>
+  <header class="jumbotron">
+    <div class="container">
+      <!-- Use container to add some spacing to the left of the text when window is resized,
+      so that the text does no stick to the edge of the jumbotron. -->
+      <h1>Welcome to YelpCamp!</h1>
+      <p>View our hand-picked campgrounds from all over the world</p>
+      <p>
+        <a href="/campgrounds/new" class="btn btn-primary btn-lg">Add new campground</a>
+      </p>
+    </div>
+  </header>
 
-<% campgrounds.forEach( function(value, index) { %>
-  <div>
-    <h4><%= value["name"] %></h4>
-    <img src="<%= value["image"] %>" alt="campground image">
-  </div>
-<% } ); %>
+  <% campgrounds.forEach( function(value, index) { %>
+    <div>
+      <h4><%= value["name"] %></h4>
+      <img src="<%= value["image"] %>" alt="campground image">
+    </div>
+  <% } ); %>
+
+</div>
 
 <% include partials/footer %>
