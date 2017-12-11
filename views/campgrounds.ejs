@@ -23,9 +23,12 @@
     <% campgrounds.forEach( function(value, index) { %>
       <div class="col-md-3 col-sm-6">
         <div class="thumbnail">
-          <img src="<%= value["image"] %>" alt="campground image">
+          <img src="<%= value.image %>" alt="campground image">
           <div class="caption">
-            <h4><%= value["name"] %></h4>
+            <h4><%= value.name %></h4>
+          </div>
+          <div>
+            <a class="btn btn-primary btn-sm" href="/campgrounds/<%= value._id %>" target="_blank">More Info</a>
           </div>
         </div>
       </div>

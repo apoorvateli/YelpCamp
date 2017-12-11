@@ -113,9 +113,16 @@ app.get("/campgrounds/new", function(req, res) {
 // SHOW - Show info about one campground
 app.get("/campgrounds/:id", function(req, res) {
   // find the campground with provided id
-  // render show template with that campground
-  res.send("This will show info about a campground one day!");
-})
+  Campground.findById(req.params.id, function(err, foundCampground) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      // render show template with that campground
+      res.render("show", {campground: foundCampground});
+    }
+  });
+});
 
 app.get("*", function(req, res) {
   res.send("Page not found");
