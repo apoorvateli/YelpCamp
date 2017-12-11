@@ -15,27 +15,30 @@ app.set("view engine", "ejs");
 // SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 var Campground = mongoose.model("Campground", campgroundSchema);
 /*
-Campground.create({
-  name: "Pawna Lake",
-  image: "https://images.thrillophilia.com/image/upload/s--GyS24Irf--/c_fill,f_auto,fl_strip_profile,h_800,q_auto,w_1300/v1/images/photos/000/050/740/original/1462422803_GSC4.jpg.jpg?1462422803"
-}, function(err, campground) {
-  if(err) {
-    console.log("Error while creating campground:");
-    console.log(err);
+Campground.create(
+  {
+    name: "Camping And Rappelling With Harishchandragad Trek In Malshej Ghat",
+    image: "https://images.thrillophilia.com/image/upload/s--OmWAR2RA--/c_fill,f_auto,fl_strip_profile,h_800,q_auto,w_1300/v1/images/photos/000/030/475/original/1504776233_1503749024_Harishchandragad_abhayaranya.jpg.webp.jpg?1504776233",
+    description: "This is an Exclusive package that offers Multi-Adventure activities. Along with trekking to Harishchandragad you will also do rappelling and overnight camping. The main attraction here is the Konkan Kada which offers a spectacular view of Konkan. You will also visit Temple of Harishchandreshwar, Kedareshwar Cave, Ganesh Gufa, Saptatirtha, Kedareshwar, and Taramatipeak."
+  },
+  function(err, campground) {
+    if(err) {
+      console.log("Error while creating campground:");
+      console.log(err);
+    }
+    else {
+      console.log("New campground created:");
+      console.log(campground);
+    }
   }
-  else {
-    console.log("New campground created:");
-    console.log(campground);
-  }
-});
+);
 */
-
-
 // Moved this array out of app.get so that we have acces to it inside of the campgrounds post route in the callback function
 /*
 var campgrounds = [
@@ -55,6 +58,7 @@ app.get("/", function(req, res) {
   res.render("landing");
 });
 
+// INDEX - Display all campgrounds
 app.get("/campgrounds", function(req, res) {
   // Get all campgrounds from db
   Campground.find({}, function(err, allCampgrounds) {
@@ -73,6 +77,7 @@ app.get("/campgrounds", function(req, res) {
   // res.render("campgrounds", {campgrounds: allCampgrounds});
 });
 
+// CREATE - Add new campground to the DB
 // Create new campgrounds
 app.post("/campgrounds", function(req, res) {
   // get data from form and add to campgrounds array
@@ -97,12 +102,20 @@ app.post("/campgrounds", function(req, res) {
   // res.redirect("/campgrounds");    // When we do a redirect, the default is to redirect as a get request
 });
 
+// NEW - Display a form to create new campground
 // This route will show the form to make a new campground. Then it will submit the form and
 // send a post request to /campgrounds, and then we get redirected back to /campgrounds
 // So, this route shows the form that will send the data to campgrounds post route
 app.get("/campgrounds/new", function(req, res) {
   res.render("new");
 });
+
+// SHOW - Show info about one campground
+app.get("/campgrounds/:id", function(req, res) {
+  // find the campground with provided id
+  // render show template with that campground
+  res.send("This will show info about a campground one day!");
+})
 
 app.get("*", function(req, res) {
   res.send("Page not found");
