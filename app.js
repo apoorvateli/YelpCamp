@@ -83,7 +83,8 @@ app.post("/campgrounds", function(req, res) {
   // get data from form and add to campgrounds array
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = { name: name, image: image };
+  var description = req.body.description;
+  var newCampground = { name: name, image: image, description: description };
   // campgrounds.push(newCampground); // instead of pushing to the array which no longer exists since we have a db now
   Campground.create(newCampground, function(err, newCampground){
     if(err) {
