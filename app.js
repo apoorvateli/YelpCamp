@@ -68,7 +68,7 @@ app.get("/campgrounds", function(req, res) {
     }
     else {
       // Display all campgrounds in db on campgrounds page
-      res.render("campgrounds", {campgrounds: allCampgrounds});
+      res.render("index", {campgrounds: allCampgrounds});
       // Display them in the CONSOLE too
       console.log("All campgrounds in the db:");
       console.log(allCampgrounds);
