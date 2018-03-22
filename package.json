@@ -1,7 +1,11 @@
 {
-  "name": "yelpcamp",
+  "name": "goCamping",
   "version": "1.0.0",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node app.js"
+  },
   "author": "Apoorva Teli",
   "license": "ISC",
   "dependencies": {
@@ -9,5 +13,8 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "mongoose": "^4.13.6"
+  },
+  "devDependencies": {
+    "dotenv": "^5.0.1"
   }
 }

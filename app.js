@@ -1,18 +1,19 @@
 var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    PORT = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+require('dotenv').config();
+var dbPath = process.env.DATABASEURL || "mongodb://localhost/go_camping";
+mongoose.connect(dbPath, {useMongoClient: true});
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-// mongoose.Promise = global.Promise;
-// Replaces Mongoose's default promise library with JavaScript's native promise library,
-// as mpromise (mongoose's default promise library) is deprecated.
-
 // SCHEMA SETUP
+// Schema's S should be Capital since Schema is a constructor
 var campgroundSchema = new mongoose.Schema({
   name: String,
   image: String,
@@ -20,39 +21,6 @@ var campgroundSchema = new mongoose.Schema({
 });
 
 var Campground = mongoose.model("Campground", campgroundSchema);
-/*
-Campground.create(
-  {
-    name: "Camping And Rappelling With Harishchandragad Trek In Malshej Ghat",
-    image: "https://images.thrillophilia.com/image/upload/s--OmWAR2RA--/c_fill,f_auto,fl_strip_profile,h_800,q_auto,w_1300/v1/images/photos/000/030/475/original/1504776233_1503749024_Harishchandragad_abhayaranya.jpg.webp.jpg?1504776233",
-    description: "This is an Exclusive package that offers Multi-Adventure activities. Along with trekking to Harishchandragad you will also do rappelling and overnight camping. The main attraction here is the Konkan Kada which offers a spectacular view of Konkan. You will also visit Temple of Harishchandreshwar, Kedareshwar Cave, Ganesh Gufa, Saptatirtha, Kedareshwar, and Taramatipeak."
-  },
-  function(err, campground) {
-    if(err) {
-      console.log("Error while creating campground:");
-      console.log(err);
-    }
-    else {
-      console.log("New campground created:");
-      console.log(campground);
-    }
-  }
-);
-*/
-// Moved this array out of app.get so that we have acces to it inside of the campgrounds post route in the callback function
-/*
-var campgrounds = [
-  { name: "Salmon Creek", image: "https://farm8.staticflickr.com/7205/7121863467_eb0aa64193.jpg" },
-  { name: "Granite Hill", image: "https://farm3.staticflickr.com/2311/2123340163_af7cba3be7.jpg" },
-  { name: "Mountain Goat's Rest", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg" },
-  { name: "Salmon Creek", image: "https://farm8.staticflickr.com/7205/7121863467_eb0aa64193.jpg" },
-  { name: "Granite Hill", image: "https://farm3.staticflickr.com/2311/2123340163_af7cba3be7.jpg" },
-  { name: "Mountain Goat's Rest", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg" },
-  { name: "Salmon Creek", image: "https://farm8.staticflickr.com/7205/7121863467_eb0aa64193.jpg" },
-  { name: "Granite Hill", image: "https://farm3.staticflickr.com/2311/2123340163_af7cba3be7.jpg" },
-  { name: "Mountain Goat's Rest", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg" }
-];
-*/
 
 app.get("/", function(req, res) {
   res.render("landing");
@@ -70,8 +38,8 @@ app.get("/campgrounds", function(req, res) {
       // Display all campgrounds in db on campgrounds page
       res.render("index", {campgrounds: allCampgrounds});
       // Display them in the CONSOLE too
-      console.log("All campgrounds in the db:");
-      console.log(allCampgrounds);
+      // console.log("All campgrounds in the db:");
+      // console.log(allCampgrounds);
     }
   });
   // res.render("campgrounds", {campgrounds: allCampgrounds});
@@ -129,6 +97,6 @@ app.get("*", function(req, res) {
   res.send("Page not found");
 });
 
-app.listen(3000, function() {
-  console.log("Listening to YelpCamp on port 3000");
+app.listen(PORT, function() {
+  console.log("Listening to goCamping on port " + PORT);
 });
