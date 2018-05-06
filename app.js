@@ -1,10 +1,11 @@
+require('dotenv').config();
+
 var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser"),
     PORT = process.env.PORT || 3000;
 
-require('dotenv').config();
 var dbPath = process.env.DATABASEURL || "mongodb://localhost/go_camping";
 mongoose.connect(dbPath, {useMongoClient: true});
 
