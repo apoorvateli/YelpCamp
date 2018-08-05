@@ -4,7 +4,8 @@ var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser"),
-    PORT = process.env.PORT || 3000;
+    PORT = process.env.PORT || 3000,
+    Campground = require("./models/campground"); // Campground model - name, image, description
 
 var dbPath = process.env.DATABASEURL || "mongodb://localhost/go_camping";
 mongoose.connect(dbPath, {useMongoClient: true});
@@ -12,16 +13,6 @@ mongoose.connect(dbPath, {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
-// SCHEMA SETUP
-// Schema's S should be Capital since Schema is a constructor
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-var Campground = mongoose.model("Campground", campgroundSchema);
 
 app.get("/", function(req, res) {
   res.render("landing");
