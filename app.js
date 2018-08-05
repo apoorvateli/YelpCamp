@@ -5,14 +5,16 @@ var express = require("express"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser"),
     PORT = process.env.PORT || 3000,
-    Campground = require("./models/campground"); // Campground model - name, image, description
+    Campground = require("./models/campground"), // Campground model - name, image, description
+    seedDB = require("./seeds");
 
 var dbPath = process.env.DATABASEURL || "mongodb://localhost/go_camping";
-mongoose.connect(dbPath, {useMongoClient: true});
+mongoose.connect(dbPath);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+seedDB();
 
 app.get("/", function(req, res) {
   res.render("landing");
@@ -74,11 +76,12 @@ app.get("/campgrounds/new", function(req, res) {
 // SHOW - Show info about one campground
 app.get("/campgrounds/:id", function(req, res) {
   // find the campground with provided id
-  Campground.findById(req.params.id, function(err, foundCampground) {
+  Campground.findById(req.params.id).populate("comments").exec( function(err, foundCampground) {
     if (err) {
       console.log(err);
     }
     else {
+      console.log(foundCampground);
       // render show template with that campground
       res.render("show", {campground: foundCampground});
     }
