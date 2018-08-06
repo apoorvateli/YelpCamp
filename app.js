@@ -30,7 +30,7 @@ app.get("/campgrounds", function(req, res) {
     }
     else {
       // Display all campgrounds in db on campgrounds page
-      res.render("index", {campgrounds: allCampgrounds});
+      res.render("campgrounds/index", {campgrounds: allCampgrounds});
       // Display them in the CONSOLE too
       // console.log("All campgrounds in the db:");
       // console.log(allCampgrounds);
@@ -70,7 +70,7 @@ app.post("/campgrounds", function(req, res) {
 // send a post request to /campgrounds, and then we get redirected back to /campgrounds
 // So, this route shows the form that will send the data to campgrounds post route
 app.get("/campgrounds/new", function(req, res) {
-  res.render("new");
+  res.render("campgrounds/new");
 });
 
 // SHOW - Show info about one campground
@@ -83,7 +83,22 @@ app.get("/campgrounds/:id", function(req, res) {
     else {
       console.log(foundCampground);
       // render show template with that campground
-      res.render("show", {campground: foundCampground});
+      res.render("campgrounds/show", {campground: foundCampground});
+    }
+  });
+});
+
+// COMMENTS ROUTES -------------------------------------------------------------
+
+// NEW - Display a form to create new comment
+// add new comment to a campground
+app.get("/campgrounds/:id/comments/new", function(req, res) {
+  // find campground by id
+  Campground.findById(req.params.id, function(err, campground) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("comments/new", {campground: campground});
     }
   });
 });
