@@ -6,6 +6,7 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     PORT = process.env.PORT || 3000,
     Campground = require("./models/campground"), // Campground model - name, image, description
+    Comment = require("./models/comment"), // Comment model - text, author
     seedDB = require("./seeds");
 
 var dbPath = process.env.DATABASEURL || "mongodb://localhost/go_camping";
@@ -99,6 +100,34 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
       console.log(err);
     } else {
       res.render("comments/new", {campground: campground});
+    }
+  });
+});
+
+app.post("/campgrounds/:id/comments", function(req, res) {
+  // 1. find campground by id
+  // 2. create new comment
+  // 3. connect new comment to campground
+  // 4. redirect to campground show page
+
+  // find campground by id
+  Campground.findById(req.params.id, function(err, campground) {
+    if (err) {
+      console.log(err);
+      res.redirect("/campgrounds/" + req.params.id);
+    } else {
+      // create new comment
+      Comment.create(req.body.comment, function(err, comment) {
+        if (err) {
+          console.log(err);
+        } else {
+          // associate the new comment to the campground
+          campground.comments.push(comment);
+          campground.save();
+          // redirect to campground show page
+          res.redirect("/campgrounds/" + campground._id);
+        }
+      })
     }
   });
 });
