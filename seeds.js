@@ -1,3 +1,9 @@
+/*
+In development, we may need some dummy data to help us test the functionality of our application, 
+so in order to generate a bunch of fake data we use a seed file.
+Seeding a DB is a way for us to create some fake/dummy data to use in our app to test the various features before the site goes live.
+*/
+
 var mongoose = require("mongoose"),
     Campground = require("./models/campground"),
     Comment = require("./models/comment");
